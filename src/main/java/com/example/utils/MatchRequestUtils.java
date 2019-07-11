@@ -40,6 +40,8 @@ public class MatchRequestUtils {
 
         JSONObject jsonObject = JSONObject.fromObject(gwBusinessEnum.getResponseMatch());
 
+
+
         GWRpcResponse gwRpcResponse = BeanToMapUtils.toBean(GWRpcResponse.class,map,jsonObject,childResponseName);
 
         return gwRpcResponse;

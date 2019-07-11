@@ -5,6 +5,7 @@ import com.example.dto.BaseGWRpcBean;
 import com.example.dto.request.GWRpcRequest;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.omg.PortableServer.LIFESPAN_POLICY_ID;
 
 import javax.servlet.ServletException;
 import java.beans.BeanInfo;
@@ -48,7 +49,7 @@ public class BeanToMapUtils {
 
                 }
 
-                if (map.containsKey(propertyName)) {
+                if ( null != map && map.containsKey(propertyName)) {
                     // 下面一句可以 try 起来，这样当一个属性赋值失败的时候就不会影响其他属性赋值。
                     Object value = map.get(propertyName);
                     if ("".equals(value)) {
@@ -57,20 +58,37 @@ public class BeanToMapUtils {
                     Object[] args = new Object[1];
                     args[0] = value;
 
-                    //TODO 临时测试
-                    /*if(propertyName.equals("productFeeList") || propertyName.equals("productInfoList") ){
-                        args[0] = new ArrayList<>();
-                    }
-*/
                     try {
                         if(null == record.getWriteMethod()){
                             return;
                         }
 
+                        //如果类型是List对象
                         if(record.getPropertyType().getName().equals(List.class.getName())
                                 || record.getPropertyType().getSuperclass().getClass().getName().equals(List.class.getName())){
-                            System.out.println("----------");
+                          //是List数据
+                            List<Object> hmData =  (List)args[0];
+                            List list = new ArrayList();
 
+                            if(null == hmData){
+                                record.getWriteMethod().invoke(obj,list );
+                                return;
+                            }
+
+                            for (Object o : hmData) {
+                                HashMap hmDataChild =  (HashMap)o;
+                                Class classData;
+                                if(propertyName.equals("productFeeList")){
+                                    classData = Class.forName("com.example.dto.response.ProductFeeVo");
+                                }else{
+                                    classData = Class.forName("com.example.dto.response.ProductInfoVo");
+                                }
+                                Object aaa = toBean(classData.newInstance().getClass(),hmDataChild,new JSONObject(),"");
+
+                                list.add(aaa);
+                            }
+
+                            record.getWriteMethod().invoke(obj,list );
                         }else if(record.getPropertyType().getName().equals(BaseGWRpcBean.class.getName())
                                 || record.getPropertyType().getSuperclass().getClass().getName().equals(BaseGWRpcBean.class.getName())
                                 ){
@@ -78,7 +96,7 @@ public class BeanToMapUtils {
                             HashMap hmData =  (HashMap)args[0];
                             Class classData =Class.forName(childResponseName);
                             Object aaa = toBean(classData.newInstance().getClass(),hmData,jsonValue,"");
-                            record.getWriteMethod().invoke(obj,aaa );
+                            record.getWriteMethod().invoke(obj,aaa);
                         }else if(null != args[0]){
                             record.getWriteMethod().invoke(obj, args);
                         }

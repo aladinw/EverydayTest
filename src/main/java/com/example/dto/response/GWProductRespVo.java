@@ -8,8 +8,8 @@
  */
 package com.example.dto.response;
 
+import com.example.dto.BaseGWRpcBean;
 import com.suixingpay.fin.floan.dubbo.rs.vo.BaseFloanRpcBean;
-import com.suixingpay.fin.floan.dubbo.rs.vo.respVo.ProductInfoVo;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -24,7 +24,7 @@ import java.util.List;
  */
 @ToString
 @EqualsAndHashCode(callSuper = true)
-public class GWProductRespVo extends BaseFloanRpcBean {
+public class GWProductRespVo extends BaseGWRpcBean {
     private List<ProductFeeVo> productFeeList_gw;
     private List<ProductInfoVo> productInfoList_gw;
 
