@@ -2,18 +2,12 @@ package com.example.utils;
 
 
 import com.example.dto.BaseGWRpcBean;
-import com.example.dto.request.GWRpcRequest;
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import org.omg.PortableServer.LIFESPAN_POLICY_ID;
 
-import javax.servlet.ServletException;
 import java.beans.BeanInfo;
-import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
+
 import java.lang.reflect.Method;
 import java.util.*;
 
@@ -26,7 +20,7 @@ public class BeanToMapUtils {
      * @return 转化出来的 JavaBean 对象
      */
     @SuppressWarnings("rawtypes")
-    public static <T> T toBean(Class<T> clazz, Map map,JSONObject jsonObject,String childResponseName)  throws  Exception{
+    public static <T> T toBean(Class<T> clazz, Map map,JSONObject jsonObject)  throws  Exception{
 
 
             BeanInfo beanInfo = Introspector.getBeanInfo(clazz);
@@ -77,25 +71,22 @@ public class BeanToMapUtils {
 
                             for (Object o : hmData) {
                                 HashMap hmDataChild =  (HashMap)o;
-                                Class classData;
-                                if(propertyName.equals("productFeeList")){
-                                    classData = Class.forName("com.example.dto.response.ProductFeeVo");
-                                }else{
-                                    classData = Class.forName("com.example.dto.response.ProductInfoVo");
-                                }
-                                Object aaa = toBean(classData.newInstance().getClass(),hmDataChild,new JSONObject(),"");
+                                Class classData = Class.forName(jsonObject.getJSONObject(record.getName()).getString("classname"));
+                                Object aaa = toBean(classData.newInstance().getClass(),hmDataChild,new JSONObject());
 
                                 list.add(aaa);
                             }
 
                             record.getWriteMethod().invoke(obj,list );
+
+                         //如果是对象类型
                         }else if(record.getPropertyType().getName().equals(BaseGWRpcBean.class.getName())
                                 || record.getPropertyType().getSuperclass().getClass().getName().equals(BaseGWRpcBean.class.getName())
                                 ){
                             JSONObject jsonValue = jsonObject.getJSONObject(record.getName()).getJSONObject("value");
                             HashMap hmData =  (HashMap)args[0];
-                            Class classData =Class.forName(childResponseName);
-                            Object aaa = toBean(classData.newInstance().getClass(),hmData,jsonValue,"");
+                            Class classData =Class.forName(jsonObject.getJSONObject(record.getName()).getString("classname"));
+                            Object aaa = toBean(classData.newInstance().getClass(),hmData,jsonValue);
                             record.getWriteMethod().invoke(obj,aaa);
                         }else if(null != args[0]){
                             record.getWriteMethod().invoke(obj, args);
@@ -112,54 +103,18 @@ public class BeanToMapUtils {
 
         return (T) obj;
 
-           /* for (int i = 0; i < propertyDescriptors.length; i++) {
-                PropertyDescriptor descriptor = propertyDescriptors[i];
-                String propertyName = descriptor.getName();
-                if (map.containsKey(propertyName)) {
-                    // 下面一句可以 try 起来，这样当一个属性赋值失败的时候就不会影响其他属性赋值。
-                    Object value = map.get(propertyName);
-                    if ("".equals(value)) {
-                        value = null;
-                    }
-                    Object[] args = new Object[1];
-                    args[0] = value;
-                    try {
-                        if(null == descriptor.getWriteMethod()){
-                            continue;
-                        }
-                        if(propertyName.equals("data")){
-                            HashMap hmData =  (HashMap)args[0];
-                            String className = (String)hmData.get("class");
-                            Class classData =Class.forName(className);
-                            descriptor.getWriteMethod().invoke(obj, toBean(classData.newInstance().getClass(),hmData));
-                        }else{
-                            descriptor.getWriteMethod().invoke(obj, args);
-                        }
 
-                    } catch (InvocationTargetException e) {
-                        System.out.println("字段映射失败");
-                    }
-                }
-            }*/
 
     }
+
+
 
     /**
      * 将一个 JavaBean 对象转化为一个 Map
      * @param bean 要转化的JavaBean 对象
      * @return 转化出来的 Map 对象
-     * @throws IntrospectionException 如果分析类属性失败
-     * @throws IllegalAccessException 如果实例化 JavaBean 失败
-     * @throws InvocationTargetException 如果调用属性的 setter 方法失败
      */
-    @SuppressWarnings("rawtypes")
-    public static Map toBeanMap(GWRpcRequest  bean, JSONObject jsonObject,String childRequestName) {
-        Map returnMap = toObjectMap(bean,jsonObject, childRequestName);
-
-        return returnMap;
-    }
-
-    private static Map toObjectMap(Object bean, JSONObject jsonObject,String childRequestName) {
+    public static Map toObjectMap(Object bean, JSONObject jsonObject) {
 
         Class<? extends Object> clazz = bean.getClass();
         Map<Object, Object> returnMap = new HashMap<Object, Object>();
@@ -185,7 +140,6 @@ public class BeanToMapUtils {
                     e.printStackTrace();
                 }
 
-
                 if (null != propertyName) {
                     propertyName = propertyName.toString();
                 }
@@ -195,12 +149,13 @@ public class BeanToMapUtils {
                     if(jsonObject.getJSONObject(propertyName).containsKey("value")){
                         object = jsonObject.getJSONObject(propertyName).getJSONObject("value");
                     }
-                    Map map = toObjectMap(result,object,"");
-                    map.put("class","".equals(childRequestName)?result.getClass().getName():childRequestName);
+                    String className = jsonObject.getJSONObject(propertyName).getString("classname");
+                    Map map = toObjectMap(result,object);
+                    map.put("class","".equals(className)?result.getClass().getName():className);
                     result = map;
 
-                    if(jsonObject.getJSONObject(propertyName).containsKey("name")){
-                        propertyName = jsonObject.getJSONObject(propertyName).getString("name");
+                    if(jsonObject.getJSONObject(propertyName).containsKey("key")){
+                        propertyName = jsonObject.getJSONObject(propertyName).getString("key");
                     }
 
                     returnMap.put(propertyName, result);

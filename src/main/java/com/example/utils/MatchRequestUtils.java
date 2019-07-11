@@ -18,11 +18,10 @@ public class MatchRequestUtils {
      */
     public static Map toBeanServiceMap (GWRpcRequest rpcRequest, GWBusinessEnum gwBusinessEnum){
 
-        String childRequestName = gwBusinessEnum.getChildRequestName();
 
         JSONObject jsonObject = JSONObject.fromObject(gwBusinessEnum.getRequestMatch());
 
-        Map map = BeanToMapUtils.toBeanMap(rpcRequest,jsonObject,childRequestName);
+        Map map = BeanToMapUtils.toObjectMap(rpcRequest,jsonObject);
 
         return map;
     }
@@ -36,13 +35,10 @@ public class MatchRequestUtils {
      * @return
      */
     public static GWRpcResponse toMapServiceBean(Map map, GWBusinessEnum gwBusinessEnum) throws  Exception{
-        String childResponseName = gwBusinessEnum.getChildResponseName();
 
         JSONObject jsonObject = JSONObject.fromObject(gwBusinessEnum.getResponseMatch());
 
-
-
-        GWRpcResponse gwRpcResponse = BeanToMapUtils.toBean(GWRpcResponse.class,map,jsonObject,childResponseName);
+        GWRpcResponse gwRpcResponse = BeanToMapUtils.toBean(GWRpcResponse.class,map,jsonObject);
 
         return gwRpcResponse;
     }

@@ -52,15 +52,15 @@ public enum GWBusinessEnum {
             , "查询产品接口"
             ,"com.suixingpay.fin.floan.dubbo.rs.FloanDubbo"
             ,"queryProduct"
-            ,"com.suixingpay.fin.floan.dubbo.rs.dto.FloanRpcRequest"
-            ,"com.suixingpay.fin.floan.dubbo.rs.vo.reqVo.ProductReqVo",
+            ,"com.suixingpay.fin.floan.dubbo.rs.dto.FloanRpcRequest",
             "{\n" +
                     "   \"requestId_gw\": \"requestId\",\n" +
                     "   \"sysId_gw\": \"sysId\",\n" +
                     "   \"serviceName_gw\": \"serviceName\",\n" +
                     "   \"businesscode_gw\": \"businesscode\",\n" +
                     "   \"data_gw\": {\n" +
-                    "      \"name\":\"data\",\n" +
+                    "      \"classname\":\"com.suixingpay.fin.floan.dubbo.rs.vo.reqVo.ProductReqVo\",\n" +
+                    "      \"key\":\"data\",\n" +
                     "      \"value\":{\n" +
                     "          \"userBusChannel_gw\": \"userBusChannel\",\n" +
                     "         \"productType_gw\": \"productType\",\n" +
@@ -70,7 +70,6 @@ public enum GWBusinessEnum {
                     "     \n" +
                     "   }\n" +
                     "}"
-                    ,"com.example.dto.response.GWProductRespVo"
                     ,"{\n" +
             "   \"requestId_gw\": \"requestId\",\n" +
             "   \"sysId_gw\": \"sysId\",\n" +
@@ -78,10 +77,18 @@ public enum GWBusinessEnum {
             "   \"code_gw\": \"code\",\n" +
             "   \"message_gw\": \"message\",\n" +
             "   \"data_gw\": {\n" +
+            "     \"classname\":\"com.example.dto.response.GWProductRespVo\",\n" +
             "      \"key\":\"data\",\n" +
             "      \"value\":{\n" +
-            "          \"productFeeList_gw\": \"productFeeList\",\n" +
-            "         \"productInfoList_gw\": \"productInfoList\"\n" +
+            "          \"productFeeList_gw\": {\n" +
+            "            \"key\":\"productFeeList\",\n" +
+            "            \"classname\":\"com.example.dto.response.ProductFeeVo\"\n" +
+            "\n" +
+            "          },\n" +
+            "         \"productInfoList_gw\": {\n" +
+            "            \"key\":\"productInfoList\",\n" +
+            "            \"classname\":\"com.example.dto.response.ProductInfoVo\"\n" +
+            "         }\n" +
             "      }\n" +
             "     \n" +
             "   }\n" +
@@ -94,9 +101,7 @@ public enum GWBusinessEnum {
     private String interfaceName;//服务端映射接口名称
     private String methodName;//服务端映射方法名称
     private String serviceRequestName;//服务端映射Request类名
-    private String childRequestName;//服务端映射子类Request类名
     private String requestMatch;//调用映射关系
-    private String childResponseName;//服务端映射网关子类Request类名
     private String responseMatch;//相应映射关系
 
 
@@ -105,9 +110,7 @@ public enum GWBusinessEnum {
             ,String interfaceName
             ,String methodName
             ,String serviceRequestName
-            ,String childRequestName
             ,String requestMatch
-            ,String childResponseName
             ,String responseMatch) {
 
         this.code = code;
@@ -115,9 +118,7 @@ public enum GWBusinessEnum {
         this.interfaceName = interfaceName;
         this.methodName = methodName;
         this.serviceRequestName = serviceRequestName;
-        this.childRequestName = childRequestName;
         this.requestMatch = requestMatch;
-        this.childResponseName = childResponseName;
         this.responseMatch = responseMatch;
     }
 
@@ -174,13 +175,6 @@ public enum GWBusinessEnum {
         this.serviceRequestName = serviceRequestName;
     }
 
-    public String getChildRequestName() {
-        return childRequestName;
-    }
-
-    public void setChildRequestName(String childRequestName) {
-        this.childRequestName = childRequestName;
-    }
 
     public String getRequestMatch() {
         return requestMatch;
@@ -190,13 +184,6 @@ public enum GWBusinessEnum {
         this.requestMatch = requestMatch;
     }
 
-    public String getChildResponseName() {
-        return childResponseName;
-    }
-
-    public void setChildResponseName(String childResponseName) {
-        this.childResponseName = childResponseName;
-    }
 
     public String getResponseMatch() {
         return responseMatch;
