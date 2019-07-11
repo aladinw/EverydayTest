@@ -1,0 +1,19 @@
+dubbo:
+  provider:
+    address: zookeeper://172.16.154.48:2181?backup=172.16.154.49:2181,172.16.154.50:2181
+    protocol: dubbo
+    port: 20880
+
+
+spring:
+  application:
+    name: EverydayTest
+  profiles:
+    active: dev
+
+server:
+  port: 8080
+
+logging:
+  config: classpath:logback-spring.xml
+  path: log
