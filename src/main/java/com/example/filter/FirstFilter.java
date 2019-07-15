@@ -2,10 +2,10 @@ package com.example.filter;
 
 
 import com.alibaba.dubbo.rpc.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Arrays;
 
 
 public class FirstFilter implements Filter {
@@ -17,9 +17,9 @@ public class FirstFilter implements Filter {
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
 
+
         Result result = invoker.invoke(invocation);
         log.info("-------------走到FirstFilter-------------------");
-
         return result;
 
     }

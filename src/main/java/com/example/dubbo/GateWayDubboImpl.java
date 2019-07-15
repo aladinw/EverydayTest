@@ -35,13 +35,11 @@ public class GateWayDubboImpl implements  GateWayDubbo{
 
             GenericService genericService = GenericRpcInstance.getInstance(interfaceName);
 
-            genericService.$invoke(methodName,
-                    new String[]{serviceRequestName}, new Object[]{map});
+            //开启异步,因此此处没有任何返回值
+            genericService.$invoke(methodName, new String[]{serviceRequestName}, new Object[]{map});
 
             Future<Object> resultFuture = RpcContext.getContext().getFuture();
 
-          /*  Map result =  (Map)genericService.$invoke(methodName,
-                    new String[]{serviceRequestName}, new Object[]{map});*/
 
             Map result = (Map)resultFuture.get(5, TimeUnit.SECONDS);
 

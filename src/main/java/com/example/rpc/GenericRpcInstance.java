@@ -13,7 +13,7 @@ public class GenericRpcInstance {
     public static  GenericService getInstance(String interfaceName){
 
         ApplicationConfig application = new ApplicationConfig();
-        application.setName("api-generic-consumer");
+        application.setName("api-consumer");
 
         RegistryConfig registry = new RegistryConfig();
         registry.setAddress("zookeeper://172.16.154.48:2181?backup=172.16.154.49:2181,172.16.154.50:2181");
@@ -27,7 +27,6 @@ public class GenericRpcInstance {
         // 声明为泛化接口
         reference.setGeneric(true);
         reference.setApplication(application);
-        //reference.setVersion("1.0.0");
         reference.setAsync(true);
         reference.setTimeout(5000);
 
