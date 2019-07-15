@@ -9,7 +9,6 @@ import com.alibaba.dubbo.rpc.service.GenericService;
 
 public class GenericRpcInstance {
 
-    private GenericService genericService = null;
 
     public static  GenericService getInstance(String interfaceName){
 
@@ -21,13 +20,16 @@ public class GenericRpcInstance {
 
         application.setRegistry(registry);
 
+
         ReferenceConfig<GenericService> reference = new ReferenceConfig<GenericService>();
 
-        // 弱类型接口名 "com.suixingpay.fin.floan.dubbo.rs.FloanDubbo"
         reference.setInterface(interfaceName);
         // 声明为泛化接口
         reference.setGeneric(true);
         reference.setApplication(application);
+        //reference.setVersion("1.0.0");
+        reference.setAsync(true);
+        reference.setTimeout(5000);
 
         ReferenceConfigCache cache = ReferenceConfigCache.getCache();
         GenericService genericService = cache.get(reference);
