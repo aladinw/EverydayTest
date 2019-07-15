@@ -1,6 +1,8 @@
 package com.example.Enum;
 
 
+import lombok.Data;
+
 /**
  * 网关业务类型
  * 后期改成配置
@@ -92,7 +94,7 @@ public enum GWBusinessEnum {
             "      }\n" +
             "     \n" +
             "   }\n" +
-            "}");
+            "}",0);
 
 
 
@@ -103,6 +105,7 @@ public enum GWBusinessEnum {
     private String serviceRequestName;//服务端映射Request类名
     private String requestMatch;//调用映射关系
     private String responseMatch;//相应映射关系
+    private int targetProtocol;//目标协议类型  0 dubbo   1 http
 
 
     GWBusinessEnum(String code
@@ -111,7 +114,8 @@ public enum GWBusinessEnum {
             ,String methodName
             ,String serviceRequestName
             ,String requestMatch
-            ,String responseMatch) {
+            ,String responseMatch
+            ,int targetProtocol) {
 
         this.code = code;
         this.desc = desc;
@@ -120,6 +124,7 @@ public enum GWBusinessEnum {
         this.serviceRequestName = serviceRequestName;
         this.requestMatch = requestMatch;
         this.responseMatch = responseMatch;
+        this.targetProtocol = targetProtocol;
     }
 
     public static GWBusinessEnum getInstance(String code) {
@@ -191,5 +196,13 @@ public enum GWBusinessEnum {
 
     public void setResponseMatch(String responseMatch) {
         this.responseMatch = responseMatch;
+    }
+
+    public int getTargetProtocol() {
+        return targetProtocol;
+    }
+
+    public void setTargetProtocol(int targetProtocol) {
+        this.targetProtocol = targetProtocol;
     }
 }

@@ -8,7 +8,7 @@
 
     <!--网关dubbo-->
     <dubbo:service interface="com.example.dubbo.GateWayDubbo" ref="gatewayDubboImpl" filter="FirstFilter,SecondFilter"/>
-    <bean id="gatewayDubboImpl" class="com.example.dubbo.GateWayDubboImpl" />
+    <bean id="gatewayDubboImpl" class="com.example.dubbo.impl.GateWayDubboImpl" />
 
 
 </beans>

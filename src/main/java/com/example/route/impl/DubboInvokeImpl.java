@@ -1,37 +1,26 @@
-package com.example.dubbo;
+package com.example.route.impl;
 
 
 import com.alibaba.dubbo.rpc.RpcContext;
 import com.alibaba.dubbo.rpc.service.GenericService;
 import com.example.Enum.GWBusinessEnum;
-import com.example.dto.BaseGWRpcBean;
-import com.example.dto.request.GWProductVo;
-import com.example.dto.request.GWRpcRequest;
-import com.example.dto.response.GWProductRespVo;
-import com.example.dto.response.GWRpcResponse;
+import com.example.route.BaseInvoke;
 import com.example.rpc.GenericRpcInstance;
-import com.example.utils.MatchRequestUtils;
+import org.apache.http.HttpResponse;
 
 import java.util.Map;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-public class GateWayDubboImpl implements  GateWayDubbo{
+public class DubboInvokeImpl  implements BaseInvoke{
     @Override
-    public GWRpcResponse<BaseGWRpcBean> dubboInvoke(GWRpcRequest<BaseGWRpcBean> rpcRequest) {
+    public Map dubboInvoke(Map map, GWBusinessEnum gwBusinessEnum) {
 
         try{
-
-            String businesscode = rpcRequest.getBusinesscode_gw();
-            GWBusinessEnum gwBusinessEnum = GWBusinessEnum.getInstance(businesscode);
 
             String interfaceName = gwBusinessEnum.getInterfaceName();
             String methodName = gwBusinessEnum.getMethodName();
             String serviceRequestName = gwBusinessEnum.getServiceRequestName();
-
-
-            //将对象转换为map-需根据映射为服务端参数
-            Map map = MatchRequestUtils.toBeanServiceMap(rpcRequest,gwBusinessEnum);
 
             GenericService genericService = GenericRpcInstance.getInstance(interfaceName);
 
@@ -40,18 +29,20 @@ public class GateWayDubboImpl implements  GateWayDubbo{
 
             Future<Object> resultFuture = RpcContext.getContext().getFuture();
 
-
             Map result = (Map)resultFuture.get(5, TimeUnit.SECONDS);
 
-
-
-            GWRpcResponse gwRpcResponse = MatchRequestUtils.toMapServiceBean(result,gwBusinessEnum);
-
-            return gwRpcResponse;
+            return result;
 
         }catch(Exception e){
             e.printStackTrace();
             return null;
         }
+
+
+    }
+
+    @Override
+    public HttpResponse httpInvoke() {
+        return null;
     }
 }
