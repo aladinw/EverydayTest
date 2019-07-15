@@ -12,9 +12,9 @@ import java.util.Map;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-public class DubboInvokeImpl  implements BaseInvoke{
+public class DubboInvokeImpl  implements BaseInvoke<Map,GWBusinessEnum,Map>{
     @Override
-    public Map dubboInvoke(Map map, GWBusinessEnum gwBusinessEnum) {
+    public Map doInvoke(Map map, GWBusinessEnum gwBusinessEnum) {
 
         try{
 
@@ -41,8 +41,4 @@ public class DubboInvokeImpl  implements BaseInvoke{
 
     }
 
-    @Override
-    public HttpResponse httpInvoke() {
-        return null;
-    }
 }

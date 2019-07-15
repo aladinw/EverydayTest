@@ -12,8 +12,8 @@ public class GateWayDubboImpl implements GateWayDubbo {
     @Override
     public GWRpcResponse<BaseGWRpcBean> dubboInvoke(GWRpcRequest<BaseGWRpcBean> rpcRequest) {
 
-        BaseRoute<GWRpcResponse> baseRoute = new DubboRouteImpl();
-        GWRpcResponse<BaseGWRpcBean> gwRpcResponse = baseRoute.doRoute(rpcRequest);
+        BaseRoute baseRoute = new DubboRouteImpl();
+        GWRpcResponse<BaseGWRpcBean> gwRpcResponse = (GWRpcResponse)baseRoute.doRoute(rpcRequest);
         return gwRpcResponse;
 
     }

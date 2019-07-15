@@ -1,14 +1,10 @@
 package com.example.route;
 
 
-import com.example.Enum.GWBusinessEnum;
-import org.apache.http.HttpResponse;
 
-import java.util.Map;
 
-public interface BaseInvoke {
+public interface BaseInvoke<T,V,R> {
 
-    Map dubboInvoke(Map map, GWBusinessEnum gwBusinessEnum);
+    R doInvoke(T request, V parameter);
 
-    HttpResponse httpInvoke();
 }
