@@ -56,18 +56,17 @@ public enum GWBusinessEnum {
             ,"queryProduct"
             ,"com.suixingpay.fin.floan.dubbo.rs.dto.FloanRpcRequest",
             "{\n" +
-                    "   \"requestId_gw\": \"requestId\",\n" +
-                    "   \"sysId_gw\": \"sysId\",\n" +
-                    "   \"serviceName_gw\": \"serviceName\",\n" +
-                    "   \"businesscode_gw\": \"businesscode\",\n" +
-                    "   \"data_gw\": {\n" +
+                    "   \"requestId\": \"requestId_gw\",  \n" +
+                    "   \"sysId\": \"sysId_gw\",\n" +
+                    "   \"serviceName\": \"serviceName_gw\",\n" +
+                    "   \"businesscode\": \"businesscode_gw\",\n" +
+                    "   \"data\": {\n" +
                     "      \"classname\":\"com.suixingpay.fin.floan.dubbo.rs.vo.reqVo.ProductReqVo\",\n" +
-                    "      \"key\":\"data\",\n" +
                     "      \"value\":{\n" +
-                    "          \"userBusChannel_gw\": \"userBusChannel\",\n" +
-                    "         \"productType_gw\": \"productType\",\n" +
-                    "         \"productId_gw\": \"productId\",\n" +
-                    "         \"feeType_gw\": \"feeType\"\n" +
+                    "          \"userBusChannel\": \"userBusChannel_gw\",\n" +
+                    "         \"productType\": \"productType_gw\",\n" +
+                    "         \"productId\": \"productId_gw\",\n" +
+                    "         \"feeType\": \"feeType_gw\"\n" +
                     "      }\n" +
                     "     \n" +
                     "   }\n" +
@@ -82,13 +81,13 @@ public enum GWBusinessEnum {
             "     \"classname\":\"com.example.dto.response.GWProductRespVo\",\n" +
             "      \"key\":\"data\",\n" +
             "      \"value\":{\n" +
-            "          \"productFeeList_gw\": {\n" +
-            "            \"key\":\"productFeeList\",\n" +
+            "            \"productFeeList_gw\": {\n" +
+            "            \"key\":\"data.productFeeList\",\n" +
             "            \"classname\":\"com.example.dto.response.ProductFeeVo\"\n" +
             "\n" +
             "          },\n" +
             "         \"productInfoList_gw\": {\n" +
-            "            \"key\":\"productInfoList\",\n" +
+            "            \"key\":\"data.productInfoList\",\n" +
             "            \"classname\":\"com.example.dto.response.ProductInfoVo\"\n" +
             "         }\n" +
             "      }\n" +

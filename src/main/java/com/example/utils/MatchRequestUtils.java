@@ -20,10 +20,13 @@ public class MatchRequestUtils {
 
 
         JSONObject jsonObject = JSONObject.fromObject(gwBusinessEnum.getRequestMatch());
+        //将Request转换成Map
+        Map map = BeanToMapUtils.toObjectMap(rpcRequest);
 
-        Map map = BeanToMapUtils.toObjectMap(rpcRequest,jsonObject);
 
-        return map;
+        Map requestMap = BeanToMapUtils.toObjectMap(jsonObject,map);
+
+        return requestMap;
     }
 
 
