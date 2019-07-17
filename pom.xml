@@ -349,6 +349,13 @@
 		</dependency>
 
 
+		<dependency>
+			<groupId>com.suixingpay.fin.athena</groupId>
+			<artifactId>athena-dubbo</artifactId>
+			<version>1.0.0-dev-SNAPSHOT</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>

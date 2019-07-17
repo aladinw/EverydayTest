@@ -6,6 +6,6 @@
                            http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
     <dubbo:consumer timeout="15000" retries="0" check="false"/>
-    <dubbo:reference id="gateWayDubbo" interface="com.example.dubbo.GateWayDubbo"
+    <dubbo:reference id="gateWayDubbo" interface="com.suixingpay.fin.athena.dubbo.GateWayDubbo"
                      check="false" timeout="15000" retries="0"/>
 </beans>

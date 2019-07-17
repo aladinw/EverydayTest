@@ -11,8 +11,25 @@ spring:
   profiles:
     active: dev
 
+  rabbitmq:
+    #host: 172.16.136.138
+    #port: 5672
+    addresses: 172.16.136.138:5672
+    username: guest
+    password: guest
+    publisher-confirms: true #支持发布确认
+    publisher-returns: true
+  redis:
+    sentinel:
+      master: sentinel-test
+      nodes: 172.16.136.32:26379,172.16.136.32:26380,172.16.136.32:26381
+    database: 3
+    pool:
+      max-wait: 1000
+      max-active: 10
+
 server:
-  port: 8080
+  port: 9090
 
 logging:
   config: classpath:logback-spring.xml

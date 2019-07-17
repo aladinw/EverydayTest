@@ -8,6 +8,7 @@
  */
 package com.example.dto.response;
 
+import com.example.dto.BaseGWRpcBean;
 import com.suixingpay.fin.floan.dubbo.rs.vo.BaseFloanRpcBean;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,7 +26,7 @@ import java.math.BigDecimal;
 @Data
 @ToString
 @EqualsAndHashCode(callSuper = true)
-public class ProductFeeVo extends BaseFloanRpcBean {
+public class ProductFeeVo extends BaseGWRpcBean {
     /** 收取方式(固定金额:FIXED_AMT;按天比例:DAY_RATE;按月比例:MONTH_RATE;按年比例:YEAR_RATE;单笔比例:ONE_RATE) */
     private  String  feeChargeType;
     /** 收取最低值 */

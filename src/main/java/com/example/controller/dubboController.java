@@ -1,28 +1,27 @@
 package com.example.controller;
 
 
-import com.alibaba.dubbo.rpc.RpcContext;
-import com.alibaba.dubbo.rpc.service.GenericService;
 import com.example.Enum.GWBusinessEnum;
-import com.example.dto.request.GWProductVo;
-import com.example.dto.request.GWRpcRequest;
-import com.example.dto.response.GWRpcResponse;
-import com.example.dubbo.GateWayDubbo;
-import com.example.utils.MatchRequestUtils;
 import com.example.utils.UUIDUtils;
 
-import com.example.rpc.GenericRpcInstance;
+import com.suixingpay.fin.athena.dubbo.GateWayDubbo;
+import com.suixingpay.fin.athena.dubbo.base.GWRpcRequest;
+import com.suixingpay.fin.athena.dubbo.base.GWRpcResponse;
+import com.suixingpay.fin.athena.dubbo.dto.request.GWProductVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
-import java.util.concurrent.Future;
 
 @RestController
 @RequestMapping("duboo")
 public class dubboController {
+
+    private static Logger logger = LoggerFactory
+            .getLogger(dubboController.class);
 
     @Autowired
     private GateWayDubbo gateWayDubbo;
@@ -48,7 +47,10 @@ public class dubboController {
         gwRpcRequest.setSysId_gw(UUIDUtils.getUUID());
 
         gwRpcRequest.setBusinesscode_gw(GWBusinessEnum.queryProduct.getCode());
+        long startTime=System.currentTimeMillis(); //获取结束时间
         GWRpcResponse gwRpcResponse = gateWayDubbo.dubboInvoke(gwRpcRequest);
+        long endTime=System.currentTimeMillis(); //获取结束时间
+        logger.info("service run time： "+(endTime-startTime));
         return gwRpcResponse.toString();
     }
 

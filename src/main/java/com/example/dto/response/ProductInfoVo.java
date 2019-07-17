@@ -8,6 +8,7 @@
  */
 package com.example.dto.response;
 
+import com.example.dto.BaseGWRpcBean;
 import com.suixingpay.fin.floan.dubbo.rs.vo.BaseFloanRpcBean;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,7 +27,7 @@ import java.math.BigDecimal;
 @Data
 @ToString
 @EqualsAndHashCode(callSuper = true)
-public class ProductInfoVo extends BaseFloanRpcBean {
+public class ProductInfoVo extends BaseGWRpcBean {
     /**
      * 产品ID
      */

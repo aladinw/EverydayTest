@@ -7,7 +7,7 @@
         http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
     <!--网关dubbo-->
-    <dubbo:service interface="com.example.dubbo.GateWayDubbo" ref="gatewayDubboImpl" filter="FirstFilter,SecondFilter"/>
+    <dubbo:service interface="com.example.dubbo.GateWayDubbo" ref="gatewayDubboImpl" filter="FirstFilter,MonitorFilter"/>
     <bean id="gatewayDubboImpl" class="com.example.dubbo.impl.GateWayDubboImpl" />
 
 
