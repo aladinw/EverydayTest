@@ -149,10 +149,11 @@ public class BeanToMapUtils {
                             return;
                         }
 
+
                         for (Object o : hmData) {
                             HashMap hmDataChild =  (HashMap)o;
                             Class classData = Class.forName(object.getString("classname"));
-                            Object aaa = toBean(classData.newInstance().getClass(),hmDataChild,new JSONObject());
+                            Object aaa = toBean(classData.newInstance().getClass(),hmDataChild,object.getJSONObject("value"));
 
                             list.add(aaa);
                         }

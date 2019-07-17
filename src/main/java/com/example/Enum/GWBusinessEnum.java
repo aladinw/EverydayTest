@@ -11,41 +11,48 @@ import lombok.Data;
 
  调用映射json;对于调用而言,需转换为服务端字段。左边是来源,右边是目标。将来源字段转换为目标字段
  {
- "requestId_gw": "requestId",
- "sysId_gw": "sysId",
- "serviceName_gw": "serviceName",
- "businesscode_gw": "businesscode",
-     "data": {
-     "key":"data",
-         "value":{
-             "userBusChannel_gw": "userBusChannel",
-             "productType_gw": "productType",
-             "productId_gw": "productId",
-             "feeType_gw": "feeType"
-         }
-
-     }
+ "requestId": "requestId_gw",
+ "sysId": "sysId_gw",
+ "serviceName": "serviceName_gw",
+ "businesscode": "businesscode_gw",
+ "data": {
+ "classname":"com.suixingpay.fin.floan.dubbo.rs.vo.reqVo.ProductReqVo",
+ "value":{
+ "userBusChannel": "userBusChannel_gw",
+ "productType": "productType_gw",
+ "productId": "productId_gw",
+ "feeType": "feeType_gw"
+ }
+ }
  }
 
 
  响应映射json;对于相应而言,需将需要的字段从目标中获取。左边是目标,右边是来源。将
  {
-     "requestId_gw": "requestId",
-     "sysId_gw": "sysId",
-     "bSuccess_gw": "bSuccess",
-     "code_gw": "code",
-     "message_gw": "message",
-     "data_gw": {
-                 "key":"data",
-                 "value":{
-                 "productFeeList_gw": "productFeeList",
-                 "productInfoList_gw": "productInfoList"
-                         }
-
-             }
+ "requestId_gw": "requestId",
+ "sysId_gw": "sysId",
+ "bSuccess_gw": "bSuccess",
+ "code_gw": "code",
+ "message_gw": "message",
+ "data_gw": {
+ "classname":"com.example.dto.response.GWProductRespVo",
+ "key":"data",
+ "value":{
+ "productFeeList_gw": {
+ "key":"data.productFeeList",
+ "classname":"com.example.dto.response.ProductFeeVo"
+ },
+ "productInfoList_gw": {
+ "key":"data.productInfoList",
+ "classname":"com.example.dto.response.ProductInfoVo",
+ "value":{
+ "productId":"productType"
+ }
+ }
  }
 
-
+ }
+ }
 
  */
 public enum GWBusinessEnum {
@@ -84,11 +91,13 @@ public enum GWBusinessEnum {
             "            \"productFeeList_gw\": {\n" +
             "            \"key\":\"data.productFeeList\",\n" +
             "            \"classname\":\"com.example.dto.response.ProductFeeVo\"\n" +
-            "\n" +
             "          },\n" +
             "         \"productInfoList_gw\": {\n" +
             "            \"key\":\"data.productInfoList\",\n" +
-            "            \"classname\":\"com.example.dto.response.ProductInfoVo\"\n" +
+            "            \"classname\":\"com.example.dto.response.ProductInfoVo\",\n" +
+            "            \"value\":{\n" +
+            "                \"productId\":\"productType\"\n" +
+            "            }\n" +
             "         }\n" +
             "      }\n" +
             "     \n" +
